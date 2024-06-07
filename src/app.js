@@ -1,9 +1,17 @@
 const express = require('express');
 const client = require('./index.js');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
 app.use(express.json());
+
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 5
+});
+
+app.use(limiter);
 
 app.post('/send-message', (req, res) => {
     console.log(req.body);

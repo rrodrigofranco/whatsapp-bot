@@ -5,11 +5,25 @@ const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
         headless: true,
-        args: [ '--no-sandbox', 
-                '--disable-gpu', 
-                '--disable-dev-shm-usage',
-                '--no-zygote',
-                '--single-process'],
+        args: [ '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-zygote',
+        '--single-process',
+        '--disable-software-rasterizer',
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding',
+        '--no-first-run',
+        '--disable-features=site-per-process',
+        '--shm-size=1gb',
+        '--aggressive-cache-discard',
+        '--disable-cache',
+        '--disable-application-cache',
+        '--disable-offline-load-stale-cache',
+        '--disk-cache-size=0',
+        '--media-cache-size=0'],
     },
     webVersionCache: { type: 'remote', 
                        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html', 
@@ -17,7 +31,6 @@ const client = new Client({
 });
 
 client.on('qr', (qr) => {
-    // Gerar QR code no terminal
     qrcode.generate(qr, { small: true });
     console.log('QR Code gerado. Escaneie com o aplicativo WhatsApp.');
 });
